@@ -4,14 +4,14 @@ pub struct Dot {
 }
 
 impl Dot {
-    pub fn new(x: usize, y: usize) -> Self {
+    fn new(x: usize, y: usize) -> Self {
         Self {
             x: x,
             y: y,
         }
     }
 
-    pub fn to_svg(&self) -> String {
+    fn to_svg(&self) -> String {
         format!("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"{}\" y=\"{}\" width=\"10\" height=\"10\"/>\n", self.x * 10, self.y * 10)
     }
 }
@@ -22,7 +22,7 @@ pub struct Canvas {
 }
 
 impl Canvas {
-    pub fn new() -> Self {
+    fn new() -> Self {
         Self {
             dots: Vec::<Dot>::new(),
         }
@@ -51,7 +51,7 @@ impl Canvas {
         }
     }
 
-    pub fn add(&mut self, dot: Dot) -> bool {
+    fn add(&mut self, dot: Dot) -> bool {
         // TODO: check dot position here (dot should not be outside the canvas)
         // TODO: check dot position not duplicate (dot should not be the same position)
         self.dots.push(dot);

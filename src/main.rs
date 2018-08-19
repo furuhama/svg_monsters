@@ -2,9 +2,11 @@ extern crate svg_monsters;
 
 mod svg_pixel;
 
+use svg_pixel::SvgGenerator;
+
 fn main() {
     let content = String::from("hoge\n");
-    let _ = svg_pixel::svg_generator::SvgGenerator::save(content, "./hoge.txt");
+    let _ = SvgGenerator::save(content, "./hoge.txt");
 
     println!("SVG Monsters");
 }
