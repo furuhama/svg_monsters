@@ -1,3 +1,6 @@
+extern crate rand;
+
+use self::rand::{thread_rng, Rng};
 use self::patterns::{LEGS, HAIRS, ARMS, BODIES, EYES, MOUTHS};
 
 #[derive(Debug)]
@@ -25,12 +28,14 @@ impl MonsterPattern {
     fn init_randomly() -> Self {
         let mut monster_pattern = Self::new();
 
-        monster_pattern.set_leg(array_to_vec(&LEGS[0]));
-        monster_pattern.set_hair(array_to_vec(&HAIRS[0]));
-        monster_pattern.set_arm(array_to_vec(&ARMS[0]));
-        monster_pattern.set_body(array_to_vec(&BODIES[0]));
-        monster_pattern.set_eye(array_to_vec(&EYES[0]));
-        monster_pattern.set_mouth(array_to_vec(&MOUTHS[0]));
+        let mut rng = thread_rng();
+
+        monster_pattern.set_leg(array_to_vec(&LEGS[rng.gen_range(0, 10)]));
+        monster_pattern.set_hair(array_to_vec(&HAIRS[rng.gen_range(0, 10)]));
+        monster_pattern.set_arm(array_to_vec(&ARMS[rng.gen_range(0, 10)]));
+        monster_pattern.set_body(array_to_vec(&BODIES[rng.gen_range(0, 10)]));
+        monster_pattern.set_eye(array_to_vec(&EYES[rng.gen_range(0, 8)]));
+        monster_pattern.set_mouth(array_to_vec(&MOUTHS[rng.gen_range(0, 8)]));
 
         monster_pattern
     }
