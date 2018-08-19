@@ -16,7 +16,7 @@ fn main() {
 
     let monster_pattern = MonsterPattern::generate_ramdomly();
     let svg_content = Canvas::from_vec(monster_pattern).to_svg();
-    let _ = SvgGenerator::save(svg_content, "svg/monster_pattern01.svg");
+    let _ = SvgGenerator::save(svg_content, "svg/monster_pattern02.svg");
 
     println!("SVG Monsters");
 }

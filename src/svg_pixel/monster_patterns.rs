@@ -30,12 +30,12 @@ impl MonsterPattern {
 
         let mut rng = thread_rng();
 
-        monster_pattern.set_leg(array_to_vec(&LEGS[rng.gen_range(0, 10)]));
-        monster_pattern.set_hair(array_to_vec(&HAIRS[rng.gen_range(0, 10)]));
-        monster_pattern.set_arm(array_to_vec(&ARMS[rng.gen_range(0, 10)]));
-        monster_pattern.set_body(array_to_vec(&BODIES[rng.gen_range(0, 10)]));
-        monster_pattern.set_eye(array_to_vec(&EYES[rng.gen_range(0, 8)]));
-        monster_pattern.set_mouth(array_to_vec(&MOUTHS[rng.gen_range(0, 8)]));
+        monster_pattern.set_leg(array_to_vec(&LEGS[rng.gen_range(0, LEGS.len())]));
+        monster_pattern.set_hair(array_to_vec(&HAIRS[rng.gen_range(0, HAIRS.len())]));
+        monster_pattern.set_arm(array_to_vec(&ARMS[rng.gen_range(0, ARMS.len())]));
+        monster_pattern.set_body(array_to_vec(&BODIES[rng.gen_range(0, BODIES.len())]));
+        monster_pattern.set_eye(array_to_vec(&EYES[rng.gen_range(0, EYES.len())]));
+        monster_pattern.set_mouth(array_to_vec(&MOUTHS[rng.gen_range(0, MOUTHS.len())]));
 
         monster_pattern
     }

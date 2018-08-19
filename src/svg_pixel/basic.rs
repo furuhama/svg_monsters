@@ -23,7 +23,7 @@ impl Dot {
         Self {
             x: x,
             y: y,
-            color: COLORS[rng.gen_range(0, 8)],
+            color: COLORS[rng.gen_range(0, COLORS.len())],
         }
     }
 
@@ -56,12 +56,15 @@ impl Canvas {
     //      [1, 0, 0, 1]
     // ]
     pub fn from_vec(vec: Vec<Vec<usize>>) -> Self {
+        let mut rng = thread_rng();
+
         let mut dots = Vec::<Dot>::new();
+        let dot_color = COLORS[rng.gen_range(0, COLORS.len())];
 
         for y in 0..vec.len() {
             for x in 0..vec[y].len() {
                 if vec[y][x] == 1 {
-                    dots.push(Dot::new_with_random_color(x, y));
+                    dots.push(Dot::new(x, y, dot_color));
                 }
             }
         }
