@@ -1,3 +1,7 @@
+extern crate rand;
+
+use self::rand::{thread_rng, Rng};
+
 pub struct Dot {
     x: usize,
     y: usize,
@@ -13,6 +17,16 @@ impl Dot {
         }
     }
 
+    fn new_with_random_color(x: usize, y: usize) -> Self {
+        let mut rng = thread_rng();
+
+        Self {
+            x: x,
+            y: y,
+            color: COLORS[rng.gen_range(0, 8)],
+        }
+    }
+
     fn to_svg(&self) -> String {
         let x_pos = self.x * 10 + 10;
         let y_pos = self.y * 10 + 10;
@@ -20,7 +34,7 @@ impl Dot {
     }
 }
 
-pub const COLORS: [&'static str; 1] = ["#D27A7F"];
+pub const COLORS: [&'static str; 8] = ["#D27A7F", "#99D480", "#7E9EAF", "#19A1B0", "#F05030", "#FBB82C", "#86BC24", "#9E47FB"];
 
 pub struct Canvas {
     // TODO: define canvas size here
