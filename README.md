@@ -16,10 +16,8 @@ This is based on MonsterID project.
 
 ## TODOs
 
-- color customizable
 - size customizable
 - move this to web server
-- use heredoc to generate svg
 - use bit instead of usize
 
 ## Refs
