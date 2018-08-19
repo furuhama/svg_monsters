@@ -51,17 +51,17 @@ impl Canvas {
 
     // vec should be like
     // [
-    //      [1, 0, 0, 0],
-    //      [1, 1, 0, 0],
-    //      [0, 0, 1, 1],
-    //      [1, 0, 0, 1]
+    //      [true, false, false, false],
+    //      [true, true, false, false],
+    //      [false, false, true, true],
+    //      [true, false, false, true]
     // ]
-    pub fn from_vec(vec: Vec<Vec<usize>>) -> Self {
+    pub fn from_vec(vec: Vec<Vec<bool>>) -> Self {
         let mut dots = Vec::<Dot>::new();
 
         for y in 0..vec.len() {
             for x in 0..vec[y].len() {
-                if vec[y][x] == 1 {
+                if vec[y][x] == true {
                     dots.push(Dot::new(x, y, COLORS[0]));
                 }
             }
@@ -73,7 +73,7 @@ impl Canvas {
         }
     }
 
-    pub fn from_vec_with_random_color(vec: Vec<Vec<usize>>) -> Self {
+    pub fn from_vec_with_random_color(vec: Vec<Vec<bool>>) -> Self {
         let mut rng = thread_rng();
 
         let mut dots = Vec::<Dot>::new();
@@ -81,7 +81,7 @@ impl Canvas {
 
         for y in 0..vec.len() {
             for x in 0..vec[y].len() {
-                if vec[y][x] == 1 {
+                if vec[y][x] == true {
                     dots.push(Dot::new(x, y, dot_color));
                 }
             }
@@ -165,10 +165,10 @@ mod test {
     #[test]
     fn canvas_from_vec() {
         let vec = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 1, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 1],
+            vec![false, false, false, false],
+            vec![false, true, false, false],
+            vec![false, false, false, false],
+            vec![false, false, false, true]
         ];
         let canvas = Canvas::from_vec(vec);
         let canvas_svg = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">

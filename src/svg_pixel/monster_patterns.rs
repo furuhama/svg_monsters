@@ -5,23 +5,23 @@ use self::patterns::{LEGS, HAIRS, ARMS, BODIES, EYES, MOUTHS};
 
 #[derive(Debug)]
 pub struct MonsterPattern {
-    leg: Vec<Vec<usize>>,
-    hair: Vec<Vec<usize>>,
-    arm: Vec<Vec<usize>>,
-    body: Vec<Vec<usize>>,
-    eye: Vec<Vec<usize>>,
-    mouth: Vec<Vec<usize>>,
+    leg: Vec<Vec<bool>>,
+    hair: Vec<Vec<bool>>,
+    arm: Vec<Vec<bool>>,
+    body: Vec<Vec<bool>>,
+    eye: Vec<Vec<bool>>,
+    mouth: Vec<Vec<bool>>,
 }
 
 impl MonsterPattern {
     fn new() -> Self {
         Self {
-            leg: Vec::<Vec<usize>>::new(),
-            hair: Vec::<Vec<usize>>::new(),
-            arm: Vec::<Vec<usize>>::new(),
-            body: Vec::<Vec<usize>>::new(),
-            eye: Vec::<Vec<usize>>::new(),
-            mouth: Vec::<Vec<usize>>::new(),
+            leg: Vec::<Vec<bool>>::new(),
+            hair: Vec::<Vec<bool>>::new(),
+            arm: Vec::<Vec<bool>>::new(),
+            body: Vec::<Vec<bool>>::new(),
+            eye: Vec::<Vec<bool>>::new(),
+            mouth: Vec::<Vec<bool>>::new(),
         }
     }
 
@@ -40,20 +40,20 @@ impl MonsterPattern {
         monster_pattern
     }
 
-    pub fn generate_ramdomly() -> Vec<Vec<usize>> {
+    pub fn generate_ramdomly() -> Vec<Vec<bool>> {
         let monster_pattern = Self::init_randomly();
 
         monster_pattern.unite()
     }
 
-    fn unite(&self) -> Vec<Vec<usize>> {
+    fn unite(&self) -> Vec<Vec<bool>> {
         let mut shape = self.unite_shape();
         let face_parts = self.unite_face_parts();
 
         for y in 0..shape.len() {
             for x in 0..shape[y].len() {
-                if face_parts[y][x] == 1 {
-                    shape[y][x] = 0;
+                if face_parts[y][x] == true {
+                    shape[y][x] = false;
                 }
             }
         }
@@ -61,7 +61,7 @@ impl MonsterPattern {
         shape
     }
 
-    fn unite_shape(&self) -> Vec<Vec<usize>> {
+    fn unite_shape(&self) -> Vec<Vec<bool>> {
         let mut shape = union(&self.leg, &self.hair);
         shape = union(&shape, &self.arm);
         shape = union(&shape, &self.body);
@@ -69,46 +69,46 @@ impl MonsterPattern {
         shape
     }
 
-    fn unite_face_parts(&self) -> Vec<Vec<usize>> {
+    fn unite_face_parts(&self) -> Vec<Vec<bool>> {
         union(&self.eye, &self.mouth)
     }
 
-    fn set_leg(&mut self, leg: Vec<Vec<usize>>) {
+    fn set_leg(&mut self, leg: Vec<Vec<bool>>) {
         self.leg = leg;
     }
 
-    fn set_hair(&mut self, hair: Vec<Vec<usize>>) {
+    fn set_hair(&mut self, hair: Vec<Vec<bool>>) {
         self.hair = hair;
     }
 
-    fn set_arm(&mut self, arm: Vec<Vec<usize>>) {
+    fn set_arm(&mut self, arm: Vec<Vec<bool>>) {
         self.arm = arm;
     }
 
-    fn set_body(&mut self, body: Vec<Vec<usize>>) {
+    fn set_body(&mut self, body: Vec<Vec<bool>>) {
         self.body = body;
     }
 
-    fn set_eye(&mut self, eye: Vec<Vec<usize>>) {
+    fn set_eye(&mut self, eye: Vec<Vec<bool>>) {
         self.eye = eye;
     }
 
-    fn set_mouth(&mut self, mouth: Vec<Vec<usize>>) {
+    fn set_mouth(&mut self, mouth: Vec<Vec<bool>>) {
         self.mouth = mouth;
     }
 }
 
-fn union(one: &Vec<Vec<usize>>, other: &Vec<Vec<usize>>) -> Vec<Vec<usize>> {
-    let mut result = Vec::<Vec<usize>>::new();
+fn union(one: &Vec<Vec<bool>>, other: &Vec<Vec<bool>>) -> Vec<Vec<bool>> {
+    let mut result = Vec::<Vec<bool>>::with_capacity(one.len());
 
     for y in 0..one.len() {
-        let mut result_y = Vec::<usize>::new();
+        let mut result_y = Vec::<bool>::with_capacity(one[y].len());
 
         for x in 0..one[y].len() {
-            if one[y][x] == 0 && other[y][x] == 0 {
-                result_y.push(0);
+            if one[y][x] == false && other[y][x] == false {
+                result_y.push(false);
             } else {
-                result_y.push(1);
+                result_y.push(true);
             }
         }
 
@@ -118,18 +118,28 @@ fn union(one: &Vec<Vec<usize>>, other: &Vec<Vec<usize>>) -> Vec<Vec<usize>> {
     result
 }
 
-fn array_to_vec(arr: &[[usize; 12]; 12]) -> Vec<Vec<usize>> {
-    let mut vec = Vec::new();
+fn array_to_vec(arr: &[[u8; 12]; 12]) -> Vec<Vec<bool>> {
+    let mut vec = Vec::<Vec<bool>>::with_capacity(12);
 
-    for e in arr.iter() {
-        vec.push(e.to_vec());
+    for ar in arr.iter() {
+        let mut v = Vec::<bool>::with_capacity(12);
+
+        for e in ar.iter() {
+            if *e == 0 {
+                v.push(false);
+            } else {
+                v.push(true);
+            }
+        }
+
+        vec.push(v);
     }
 
     vec
 }
 
 mod patterns {
-    pub const LEGS: [[[usize; 12]; 12]; 10] = [
+    pub const LEGS: [[[u8; 12]; 12]; 10] = [
         [
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -272,7 +282,7 @@ mod patterns {
         ]
     ];
 
-    pub const HAIRS: [[[usize; 12]; 12]; 10] = [
+    pub const HAIRS: [[[u8; 12]; 12]; 10] = [
         [
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,1,1,0,0,1,1,0,0,0],
@@ -415,7 +425,7 @@ mod patterns {
         ]
     ];
 
-    pub const ARMS: [[[usize; 12]; 12]; 10] = [
+    pub const ARMS: [[[u8; 12]; 12]; 10] = [
         [
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -558,7 +568,7 @@ mod patterns {
         ]
     ];
 
-    pub const BODIES: [[[usize; 12]; 12]; 10] = [
+    pub const BODIES: [[[u8; 12]; 12]; 10] = [
         [
              [0,0,0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -701,7 +711,7 @@ mod patterns {
          ]
     ];
 
-    pub const EYES: [[[usize; 12]; 12]; 8] = [
+    pub const EYES: [[[u8; 12]; 12]; 8] = [
         [
              [0,0,0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -816,7 +826,7 @@ mod patterns {
          ]
     ];
 
-    pub const MOUTHS: [[[usize; 12]; 12]; 8] = [
+    pub const MOUTHS: [[[u8; 12]; 12]; 8] = [
          [
              [0,0,0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -940,28 +950,28 @@ mod test {
         let mut monster_pattern = MonsterPattern::new();
 
         let leg = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 1, 1, 0]
+            vec![false, false, false, false],
+            vec![false, false, false, false],
+            vec![false, false, false, false],
+            vec![false, true, true, false]
         ];
         let hair = vec![
-            vec![1, 0, 0, 1],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0]
+            vec![true, false, false, true],
+            vec![false, false, false, false],
+            vec![false, false, false, false],
+            vec![false, false, false, false]
         ];
         let arm = vec![
-            vec![0, 0, 0, 0],
-            vec![1, 0, 0, 1],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0]
+            vec![false, false, false, false],
+            vec![true, false, false, true],
+            vec![false, false, false, false],
+            vec![false, false, false, false]
         ];
         let body = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 1, 1, 0],
-            vec![0, 1, 1, 0],
-            vec![0, 0, 0, 0]
+            vec![false, false, false, false],
+            vec![false, true, true, false],
+            vec![false, true, true, false],
+            vec![false, false, false, false]
         ];
         monster_pattern.set_leg(leg);
         monster_pattern.set_hair(hair);
@@ -969,61 +979,98 @@ mod test {
         monster_pattern.set_body(body);
 
         let shape = vec![
-            vec![1, 0, 0, 1],
-            vec![1, 1, 1, 1],
-            vec![0, 1, 1, 0],
-            vec![0, 1, 1, 0]
+            vec![true, false, false, true],
+            vec![true, true, true, true],
+            vec![false, true, true, false],
+            vec![false, true, true, false]
         ];
         assert_eq!(monster_pattern.unite_shape(), shape);
 
         let eye = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 1, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0]
+            vec![false, false, false, false],
+            vec![false, true, false, false],
+            vec![false, false, false, false],
+            vec![false, false, false, false]
         ];
         let mouth = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 0, 0, 0],
-            vec![0, 0, 1, 0],
-            vec![0, 0, 0, 0]
+            vec![false, false, false, false],
+            vec![false, false, false, false],
+            vec![false, false, true, false],
+            vec![false, false, false, false]
         ];
         monster_pattern.set_eye(eye);
         monster_pattern.set_mouth(mouth);
 
         let face_parts = vec![
-            vec![0, 0, 0, 0],
-            vec![0, 1, 0, 0],
-            vec![0, 0, 1, 0],
-            vec![0, 0, 0, 0]
+            vec![false, false, false, false],
+            vec![false, true, false, false],
+            vec![false, false, true, false],
+            vec![false, false, false, false]
         ];
         assert_eq!(monster_pattern.unite_face_parts(), face_parts);
 
         let monster = vec![
-            vec![1, 0, 0, 1],
-            vec![1, 0, 1, 1],
-            vec![0, 1, 0, 0],
-            vec![0, 1, 1, 0]
+            vec![true, false, false, true],
+            vec![true, false, true, true],
+            vec![false, true, false, false],
+            vec![false, true, true, false],
         ];
         assert_eq!(monster_pattern.unite(), monster);
     }
 
     #[test]
-    fn test_union() {
+    fn union_test() {
         let vec1 = vec![
-            vec![0, 0],
-            vec![1, 1]
+            vec![false, false],
+            vec![true, true]
         ];
         let vec2 = vec![
-            vec![0, 1],
-            vec![0, 1]
+            vec![false, true],
+            vec![false, true]
         ];
 
         let result = vec![
-            vec![0, 1],
-            vec![1, 1]
+            vec![false, true],
+            vec![true, true]
         ];
 
         assert_eq!(union(&vec1, &vec2), result);
+    }
+
+    #[test]
+    fn array_to_vec_test() {
+        use super::array_to_vec;
+
+        let arr: [[u8; 12]; 12] = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+
+        let vec = vec![
+            vec![false, false, false, false, false, false, false, false, false, false, false, false],
+            vec![false, true, false, true, false, true, false, true, false, true, false, true],
+            vec![true, true, true, true, true, true, true, true, true, true, true, true],
+            vec![false, false, false, false, false, false, false, false, false, false, false, false],
+            vec![false, true, false, true, false, true, false, true, false, true, false, true],
+            vec![true, true, true, true, true, true, true, true, true, true, true, true],
+            vec![false, false, false, false, false, false, false, false, false, false, false, false],
+            vec![false, true, false, true, false, true, false, true, false, true, false, true],
+            vec![true, true, true, true, true, true, true, true, true, true, true, true],
+            vec![false, false, false, false, false, false, false, false, false, false, false, false],
+            vec![false, true, false, true, false, true, false, true, false, true, false, true],
+            vec![true, true, true, true, true, true, true, true, true, true, true, true]
+        ];
+
+        assert_eq!(array_to_vec(&arr), vec);
     }
 }
