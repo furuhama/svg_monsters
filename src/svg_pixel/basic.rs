@@ -60,7 +60,7 @@ impl Canvas {
     }
 
     pub fn to_svg(&self) -> String {
-        let mut svg_tag = String::from("<svg width=\"80\" height=\"80\" viewPort=\"0 0 80 80\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n");
+        let mut svg_tag = String::from("<svg width=\"120\" height=\"120\" viewPort=\"0 0 120 120\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n");
         for dot in &self.dots {
             svg_tag.push_str(dot.to_svg().as_str());
         }
@@ -87,7 +87,7 @@ mod test {
     #[test]
     fn canvas() {
         let canvas = Canvas::new();
-        let canvas_svg = String::from("<svg width=\"80\" height=\"80\" viewPort=\"0 0 80 80\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n</svg>\n");
+        let canvas_svg = String::from("<svg width=\"120\" height=\"120\" viewPort=\"0 0 120 120\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n</svg>\n");
         assert_eq!(canvas.to_svg(), canvas_svg);
     }
 
@@ -97,7 +97,7 @@ mod test {
 
         let dot1 = Dot::new(1, 1);
         canvas.add(dot1);
-        let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(r#"<svg width="120" height="120" viewPort="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
 </svg>
 "#);
@@ -105,7 +105,7 @@ mod test {
 
         let dot2 = Dot::new(5, 4);
         canvas.add(dot2);
-        let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(r#"<svg width="120" height="120" viewPort="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="50" y="40" width="10" height="10"/>
 </svg>
@@ -122,7 +122,7 @@ mod test {
             vec![0, 0, 0, 1],
         ];
         let canvas = Canvas::from_vec(vec);
-        let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(r#"<svg width="120" height="120" viewPort="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="30" y="30" width="10" height="10"/>
 </svg>
