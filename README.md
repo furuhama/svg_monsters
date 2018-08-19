@@ -10,7 +10,7 @@ This is based on MonsterID project.
 
 ## Sample
 
-![monster.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern.svg)
+![monster.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern00.svg)
 
 ## TODOs
 
