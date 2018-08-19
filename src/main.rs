@@ -15,8 +15,8 @@ fn main() {
     // let _ = SvgGenerator::save(svg_content, "svg/simple_line.svg");
 
     let monster_pattern = MonsterPattern::generate_ramdomly();
-    let svg_content = Canvas::from_vec(monster_pattern).to_svg();
-    let _ = SvgGenerator::save(svg_content, "svg/monster_pattern02.svg");
+    let svg_content = Canvas::from_vec_with_random_color(monster_pattern).to_svg();
+    let _ = SvgGenerator::save(svg_content, "svg/monster_pattern03.svg");
 
     println!("SVG Monsters");
 }

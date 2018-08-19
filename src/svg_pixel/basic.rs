@@ -37,14 +37,15 @@ impl Dot {
 pub const COLORS: [&'static str; 8] = ["#D27A7F", "#99D480", "#7E9EAF", "#19A1B0", "#F05030", "#FBB82C", "#86BC24", "#9E47FB"];
 
 pub struct Canvas {
-    // TODO: define canvas size here
     dots: Vec<Dot>,
+    size: usize,
 }
 
 impl Canvas {
     fn new() -> Self {
         Self {
             dots: Vec::<Dot>::new(),
+            size: 12,
         }
     }
 
@@ -56,6 +57,23 @@ impl Canvas {
     //      [1, 0, 0, 1]
     // ]
     pub fn from_vec(vec: Vec<Vec<usize>>) -> Self {
+        let mut dots = Vec::<Dot>::new();
+
+        for y in 0..vec.len() {
+            for x in 0..vec[y].len() {
+                if vec[y][x] == 1 {
+                    dots.push(Dot::new(x, y, COLORS[0]));
+                }
+            }
+        }
+
+        Self {
+            dots: dots,
+            size: 12,
+        }
+    }
+
+    pub fn from_vec_with_random_color(vec: Vec<Vec<usize>>) -> Self {
         let mut rng = thread_rng();
 
         let mut dots = Vec::<Dot>::new();
@@ -71,6 +89,7 @@ impl Canvas {
 
         Self {
             dots: dots,
+            size: 12,
         }
     }
 

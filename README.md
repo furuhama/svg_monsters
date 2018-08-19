@@ -13,6 +13,7 @@ This is based on MonsterID project.
 ![monster00.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern00.svg)
 ![monster01.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern01.svg)
 ![monster02.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern02.svg)
+![monster03.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern03.svg)
 
 ## TODOs
 
