@@ -60,7 +60,7 @@ impl Canvas {
     }
 
     pub fn to_svg(&self) -> String {
-        let mut svg_tag = String::from("<svg width=\"140\" height=\"140\" viewPort=\"10 10 130 130\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n");
+        let mut svg_tag = String::from("<svg width=\"140\" height=\"140\" viewPort=\"10 10 130 130\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">\n<rect xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\" fill=\"#ECECEC\"/>");
         for dot in &self.dots {
             svg_tag.push_str(dot.to_svg().as_str());
         }
