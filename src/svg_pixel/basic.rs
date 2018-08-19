@@ -61,7 +61,7 @@ impl Canvas {
         for y in 0..vec.len() {
             for x in 0..vec[y].len() {
                 if vec[y][x] == 1 {
-                    dots.push(Dot::new(x, y, COLORS[0]));
+                    dots.push(Dot::new_with_random_color(x, y));
                 }
             }
         }
