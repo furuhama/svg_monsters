@@ -14,12 +14,11 @@ This is based on MonsterID project.
 ![monster01.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern01.svg)
 ![monster02.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern02.svg)
 ![monster03.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern03.svg)
+![monster04.svg](https://github.com/furuhama/svg_monsters/blob/master/svg/monster_pattern04.svg)
 
 ## TODOs
 
-- size customizable
 - move this to web server
-- use bit instead of usize
 
 ## Refs
 
