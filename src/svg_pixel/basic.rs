@@ -12,7 +12,7 @@ impl Dot {
     }
 
     pub fn to_svg(&self) -> String {
-        format!("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"{}\" y=\"{}\" width=\"100\" height=\"100\"/>\n", self.x * 10, self.y * 10)
+        format!("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"{}\" y=\"{}\" width=\"10\" height=\"10\"/>\n", self.x * 10, self.y * 10)
     }
 }
 
@@ -76,11 +76,11 @@ mod test {
     #[test]
     fn dot() {
         let dot1 = Dot::new(1, 1);
-        let dot1_svg = String::from("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"10\" y=\"10\" width=\"100\" height=\"100\"/>\n");
+        let dot1_svg = String::from("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"10\" y=\"10\" width=\"10\" height=\"10\"/>\n");
         assert_eq!(dot1.to_svg(), dot1_svg);
 
         let dot2 = Dot::new(5, 4);
-        let dot2_svg = String::from("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"50\" y=\"40\" width=\"100\" height=\"100\"/>\n");
+        let dot2_svg = String::from("<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"50\" y=\"40\" width=\"10\" height=\"10\"/>\n");
         assert_eq!(dot2.to_svg(), dot2_svg);
     }
 
@@ -98,7 +98,7 @@ mod test {
         let dot1 = Dot::new(1, 1);
         canvas.add(dot1);
         let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="100" height="100"/>
+<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
 </svg>
 "#);
         assert_eq!(canvas.to_svg(), canvas_svg);
@@ -106,8 +106,8 @@ mod test {
         let dot2 = Dot::new(5, 4);
         canvas.add(dot2);
         let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="100" height="100"/>
-<rect xmlns="http://www.w3.org/2000/svg" x="50" y="40" width="100" height="100"/>
+<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
+<rect xmlns="http://www.w3.org/2000/svg" x="50" y="40" width="10" height="10"/>
 </svg>
 "#);
         assert_eq!(canvas.to_svg(), canvas_svg);
@@ -123,8 +123,8 @@ mod test {
         ];
         let canvas = Canvas::from_vec(vec);
         let canvas_svg = String::from(r#"<svg width="80" height="80" viewPort="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="100" height="100"/>
-<rect xmlns="http://www.w3.org/2000/svg" x="30" y="30" width="100" height="100"/>
+<rect xmlns="http://www.w3.org/2000/svg" x="10" y="10" width="10" height="10"/>
+<rect xmlns="http://www.w3.org/2000/svg" x="30" y="30" width="10" height="10"/>
 </svg>
 "#);
         assert_eq!(canvas.to_svg(), canvas_svg);
