@@ -1,10 +1,7 @@
-#[allow(unused)]
 mod basic_structs;
-#[allow(unused)]
-mod svg_generator;
-#[allow(unused)]
 mod monster_patterns;
+mod svg_generator;
 
 pub use self::basic_structs::Canvas;
-pub use self::svg_generator::SvgGenerator;
 pub use self::monster_patterns::MonsterPattern;
+pub use self::svg_generator::SvgGenerator;

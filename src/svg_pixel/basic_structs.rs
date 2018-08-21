@@ -1,3 +1,4 @@
+#![allow(unused)]
 extern crate rand;
 
 use self::rand::{thread_rng, Rng};
@@ -11,9 +12,9 @@ pub struct Dot {
 impl Dot {
     fn new(x: usize, y: usize, color: &'static str) -> Self {
         Self {
-            x: x,
-            y: y,
-            color: color,
+            x,
+            y,
+            color,
         }
     }
 
@@ -21,8 +22,8 @@ impl Dot {
         let mut rng = thread_rng();
 
         Self {
-            x: x,
-            y: y,
+            x,
+            y,
             color: COLORS[rng.gen_range(0, COLORS.len())],
         }
     }
@@ -34,7 +35,9 @@ impl Dot {
     }
 }
 
-pub const COLORS: [&'static str; 8] = ["#D27A7F", "#99D480", "#7E9EAF", "#19A1B0", "#F05030", "#FBB82C", "#86BC24", "#9E47FB"];
+pub const COLORS: [&str; 8] = [
+    "#D27A7F", "#99D480", "#7E9EAF", "#19A1B0", "#F05030", "#FBB82C", "#86BC24", "#9E47FB",
+];
 
 pub struct Canvas {
     dots: Vec<Dot>,
@@ -56,39 +59,39 @@ impl Canvas {
     //      [false, false, true, true],
     //      [true, false, false, true]
     // ]
-    pub fn from_vec(vec: Vec<Vec<bool>>) -> Self {
+    pub fn from_vec(vec: &[Vec<bool>]) -> Self {
         let mut dots = Vec::<Dot>::new();
 
-        for y in 0..vec.len() {
-            for x in 0..vec[y].len() {
-                if vec[y][x] == true {
-                    dots.push(Dot::new(x, y, COLORS[0]));
+        for (idx_y, y) in vec.iter().enumerate() {
+            for (idx_x, x) in y.iter().enumerate() {
+                if *x {
+                    dots.push(Dot::new(idx_x, idx_y, COLORS[0]));
                 }
             }
         }
 
         Self {
-            dots: dots,
+            dots,
             size: 12,
         }
     }
 
-    pub fn from_vec_with_random_color(vec: Vec<Vec<bool>>) -> Self {
+    pub fn from_vec_with_random_color(vec: &[Vec<bool>]) -> Self {
         let mut rng = thread_rng();
 
         let mut dots = Vec::<Dot>::new();
         let dot_color = COLORS[rng.gen_range(0, COLORS.len())];
 
-        for y in 0..vec.len() {
-            for x in 0..vec[y].len() {
-                if vec[y][x] == true {
-                    dots.push(Dot::new(x, y, dot_color));
+        for (idx_y, y) in vec.iter().enumerate() {
+            for (idx_x, x) in y.iter().enumerate() {
+                if *x {
+                    dots.push(Dot::new(idx_x, idx_y, dot_color));
                 }
             }
         }
 
         Self {
-            dots: dots,
+            dots,
             size: 12,
         }
     }
@@ -102,9 +105,11 @@ impl Canvas {
     }
 
     pub fn to_svg(&self) -> String {
-        let mut svg_tag = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let mut svg_tag = String::from(
+            r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#ECECEC"/>
-"##);
+"##,
+        );
         for dot in &self.dots {
             svg_tag.push_str(dot.to_svg().as_str());
         }
@@ -114,8 +119,8 @@ impl Canvas {
 }
 
 mod test {
-    #[allow(unused)]
-    use super::{Dot, Canvas, COLORS};
+    #![allow(unused)]
+    use super::{Canvas, Dot, COLORS};
 
     #[test]
     fn dot() {
@@ -131,10 +136,12 @@ mod test {
     #[test]
     fn canvas() {
         let canvas = Canvas::new();
-        let canvas_svg = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(
+            r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#ECECEC"/>
 </svg>
-"##);
+"##,
+        );
         assert_eq!(canvas.to_svg(), canvas_svg);
     }
 
@@ -144,21 +151,25 @@ mod test {
 
         let dot1 = Dot::new(1, 1, COLORS[0]);
         canvas.add(dot1);
-        let canvas_svg = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(
+            r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#ECECEC"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="20" y="20" width="10" height="10" fill="#D27A7F"/>
 </svg>
-"##);
+"##,
+        );
         assert_eq!(canvas.to_svg(), canvas_svg);
 
         let dot2 = Dot::new(5, 4, COLORS[0]);
         canvas.add(dot2);
-        let canvas_svg = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas_svg = String::from(
+            r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#ECECEC"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="20" y="20" width="10" height="10" fill="#D27A7F"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="60" y="50" width="10" height="10" fill="#D27A7F"/>
 </svg>
-"##);
+"##,
+        );
         assert_eq!(canvas.to_svg(), canvas_svg);
     }
 
@@ -168,15 +179,17 @@ mod test {
             vec![false, false, false, false],
             vec![false, true, false, false],
             vec![false, false, false, false],
-            vec![false, false, false, true]
+            vec![false, false, false, true],
         ];
-        let canvas = Canvas::from_vec(vec);
-        let canvas_svg = String::from(r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        let canvas = Canvas::from_vec(&vec);
+        let canvas_svg = String::from(
+            r##"<svg width="140" height="140" viewPort="10 10 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <rect xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#ECECEC"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="20" y="20" width="10" height="10" fill="#D27A7F"/>
 <rect xmlns="http://www.w3.org/2000/svg" x="40" y="40" width="10" height="10" fill="#D27A7F"/>
 </svg>
-"##);
+"##,
+        );
         assert_eq!(canvas.to_svg(), canvas_svg);
     }
 }
