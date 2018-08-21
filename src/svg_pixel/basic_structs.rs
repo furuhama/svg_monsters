@@ -96,9 +96,8 @@ impl Canvas {
         }
     }
 
+    // private API
     fn add(&mut self, dot: Dot) -> bool {
-        // TODO: check dot position here (dot should not be outside the canvas)
-        // TODO: check dot position not duplicate (dot should not be the same position)
         self.dots.push(dot);
 
         true
